@@ -1,0 +1,108 @@
+FROM ubuntu:18.04
+MAINTAINER Dongjoo Seo <dseo3@uci.edu>
+
+# Add i386 support for support for Pin
+RUN dpkg --add-architecture i386
+RUN apt-get update && apt-get install -y \
+    python \
+    screen \
+    tmux \
+    binutils \
+    libc6:i386 \
+    libncurses5:i386 \
+    libstdc++6:i386 \
+ && rm -rf /var/lib/apt/lists/*
+# For building Sniper
+RUN apt-get update && apt-get install -y \
+    automake \
+    build-essential \
+    curl \
+    wget \
+    libboost-dev \
+    libsqlite3-dev \
+    zlib1g-dev \
+    libbz2-dev \
+    g++-4.8 \
+ && rm -rf /var/lib/apt/lists/*
+# For building RISC-V Tools
+RUN apt-get update && apt-get install -y \
+    autoconf \
+    automake \
+    autotools-dev \
+    bc \
+    bison \
+    curl \
+    device-tree-compiler \
+    flex \
+    gawk \
+    gperf \
+    libexpat-dev \
+    libgmp-dev \
+    libmpc-dev \
+    libmpfr-dev \
+    libtool \
+    libusb-1.0-0-dev \
+    patchutils \
+    pkg-config \
+    texinfo \
+    zlib1g-dev \
+ && rm -rf /var/lib/apt/lists/*
+# Helper utilities
+RUN apt-get update
+RUN apt-get install -y software-properties-common 
+RUN apt-get update && apt-get install -y \
+    gdb \
+    git \
+ && rm -rf /var/lib/apt/lists/*
+
+RUN add-apt-repository 'deb http://security.ubuntu.com/ubuntu xenial-security main'
+RUN apt update
+RUN apt install -y libjasper1 libjasper-dev && rm -rf /var/lib/apt/lists/*
+
+RUN apt-get update && \
+        apt-get install -y \
+        build-essential \
+        cmake \
+        git \
+        wget \
+        unzip \
+        yasm \
+        pkg-config \
+        libswscale-dev \
+        libtbb2 \
+        libtbb-dev \
+        libjpeg-dev \
+        libpng-dev \
+        libtiff-dev \
+        libavformat-dev \
+        libpq-dev \
+	python-pip \
+        python2.7 \
+        python2.7-dev
+
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+
+ENV DEBIAN_FRONTEND="noninteractive"
+RUN apt-get install -y python-opencv
+
+
+ENV PIN_NAME pin-3.11-97998-g7ecce2dac-gcc-linux
+WORKDIR /usr/local/bin
+RUN wget https://software.intel.com/sites/landingpage/pintool/downloads/pin-3.11-97998-g7ecce2dac-gcc-linux.tar.gz
+RUN chmod ugo+x $PIN_NAME.tar.gz
+RUN tar -xvzf $PIN_NAME.tar.gz
+RUN rm /usr/local/bin/$PIN_NAME.tar.gz
+RUN chmod 777 ./$PIN_NAME -R
+ENV PIN_HOME /usr/local/bin/$PIN_NAME
+
+RUN mkdir /usr/local/src/sniper
+WORKDIR /usr/local/src/sniper
+COPY sniper-7.2.tgz ./
+RUN tar xvf sniper-7.2.tgz
+ENV SNIPER_PATH=/usr/local/src/sniper/sniper-7.2
+WORKDIR $SNIPER_PATH
+RUN make -j2
+
+RUN pip uninstall -y numpy
+RUN pip install pyinstaller

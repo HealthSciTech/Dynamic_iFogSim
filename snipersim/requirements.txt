@@ -1,0 +1,14 @@
+cycler==0.10.0
+gunicorn==19.6.0
+imutils==0.4.3
+matplotlib==2.0.0
+numpy==1.11.1
+Pillow>=6.2.0
+psycopg2==2.7.3
+pyparsing==2.1.9
+python-dateutil==2.6.0
+pytz==2016.6.1
+requests==2.20.0
+six==1.10.0
+virtualenv==15.0.3
+whitenoise==3.3.0

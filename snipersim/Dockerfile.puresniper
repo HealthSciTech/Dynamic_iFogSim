@@ -1,0 +1,69 @@
+FROM ubuntu:18.04
+# Add i386 support for support for Pin
+RUN dpkg --add-architecture i386
+RUN apt-get update && apt-get install -y \
+    python \
+    screen \
+    tmux \
+    binutils \
+    libc6:i386 \
+    libncurses5:i386 \
+    libstdc++6:i386 \
+ && rm -rf /var/lib/apt/lists/*
+# For building Sniper
+RUN apt-get update && apt-get install -y \
+    automake \
+    build-essential \
+    curl \
+    wget \
+    libboost-dev \
+    libsqlite3-dev \
+    zlib1g-dev \
+    libbz2-dev \
+    g++-4.8 \
+ && rm -rf /var/lib/apt/lists/*
+# For building RISC-V Tools
+RUN apt-get update && apt-get install -y \
+    autoconf \
+    automake \
+    autotools-dev \
+    bc \
+    bison \
+    curl \
+    device-tree-compiler \
+    flex \
+    gawk \
+    gperf \
+    libexpat-dev \
+    libgmp-dev \
+    libmpc-dev \
+    libmpfr-dev \
+    libtool \
+    libusb-1.0-0-dev \
+    patchutils \
+    pkg-config \
+    texinfo \
+    zlib1g-dev \
+ && rm -rf /var/lib/apt/lists/*
+# Helper utilities
+RUN apt-get update && apt-get install -y \
+    gdb \
+    git \
+ && rm -rf /var/lib/apt/lists/*
+
+ENV PIN_NAME pin-3.11-97998-g7ecce2dac-gcc-linux
+WORKDIR /usr/local/bin
+RUN wget https://software.intel.com/sites/landingpage/pintool/downloads/pin-3.11-97998-g7ecce2dac-gcc-linux.tar.gz
+RUN chmod ugo+x $PIN_NAME.tar.gz
+RUN tar -xvzf $PIN_NAME.tar.gz
+RUN rm /usr/local/bin/$PIN_NAME.tar.gz
+RUN chmod 777 ./$PIN_NAME -R
+ENV PIN_HOME /usr/local/bin/$PIN_NAME
+
+RUN mkdir /usr/local/src/sniper
+WORKDIR /usr/local/src/sniper
+COPY sniper-7.2.tgz ./
+RUN tar xvf sniper-7.2.tgz
+ENV SNIPER_PATH=/usr/local/src/sniper/sniper-7.2
+WORKDIR $SNIPER_PATH
+RUN make -j2
