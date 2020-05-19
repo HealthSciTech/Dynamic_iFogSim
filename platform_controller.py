@@ -14,18 +14,22 @@ def remove_all_containers(client):
     for container in client.containers.list():
         container.kill()
 
-def init_snipersim():
+def destroy_and_construct_snipersim():
     client = docker.from_env()
     remove_all_containers(client)
     container = client.containers.create('sniper', command='/bin/bash', tty=True, detach=True, privileged=True)
     container.start() 
+
+    # re-copy the configs file to each containers
     cmd ="docker cp configs/devices/"+ devices_cfg['edge']+" "+container.id+":/usr/local/src/sniper/sniper-7.2/"
     os.system(cmd)
     cmd ="docker cp configs/devices/"+ devices_cfg['fog']+" "+container.id+":/usr/local/src/sniper/sniper-7.2/"
     os.system(cmd)    
     cmd ="docker cp configs/devices/"+ devices_cfg['cloud']+" "+container.id+":/usr/local/src/sniper/sniper-7.2/"    
     os.system(cmd)
-    return client.containers.list()[0]
+
+    return client.containers.list()[0]    
+
 
 def get_MIPS_from_result(time, instructions):
     ins = instructions.decode('utf-8').split('|')[1]
@@ -116,20 +120,19 @@ def _main():
     init_params()
     
     print("start to get the MIPS of workload from virtual devices with snipersim")
-    snipersim_container = init_snipersim()
     devices_cfg['workload']=args.workload    
     if args.workload == 'FallDetection':
         read_agent_list()
         for x in range(1,50,2):
             devices_cfg['window_size'] = str(x)
-            edge_MIPS, fog_MIPS = get_two_layer_MIPS_from_snipersim(snipersim_container)
+            edge_MIPS, fog_MIPS = get_two_layer_MIPS_from_snipersim(destroy_and_construct_snipersim())
             print(str(x)+","+str(edge_MIPS)+","+str(fog_MIPS)+","+str(devices_cfg['ins'][0])+","+str(devices_cfg['ins'][1]))
             devices_cfg['edge_MIPS'] = edge_MIPS
             devices_cfg['fog_MIPS'] = fog_MIPS
             agent = check_agent_available(args.agent)
             agent.getFallDetectionResult(int(devices_cfg['number_of_edge']))
     else:
-        edge_MIPS, fog_MIPS, cloud_MIPS = get_three_layer_MIPS_from_snipersim(snipersim_container)        
+        edge_MIPS, fog_MIPS, cloud_MIPS = get_three_layer_MIPS_from_snipersim(destroy_and_construct_snipersim())        
         devices_cfg['edge_MIPS']=edge_MIPS
         devices_cfg['fog_MIPS']=fog_MIPS
         devices_cfg['cloud_MIPS']=cloud_MIPS
