@@ -1,6 +1,6 @@
 import argparse
 import sys
-from agents.brute_force import BruteForceAgent
+from cross_layer_controller.brute_force import BruteForceAgent
 import os
 import docker
 
@@ -21,11 +21,11 @@ def destroy_and_construct_snipersim():
     container.start() 
 
     # re-copy the configs file to each containers
-    cmd ="docker cp configs/devices/"+ devices_cfg['edge']+" "+container.id+":/usr/local/src/sniper/sniper-7.2/"
+    cmd ="docker cp system_configurations/devices/"+ devices_cfg['edge']+" "+container.id+":/usr/local/src/sniper/sniper-7.2/"
     os.system(cmd)
-    cmd ="docker cp configs/devices/"+ devices_cfg['fog']+" "+container.id+":/usr/local/src/sniper/sniper-7.2/"
+    cmd ="docker cp system_configurations/devices/"+ devices_cfg['fog']+" "+container.id+":/usr/local/src/sniper/sniper-7.2/"
     os.system(cmd)    
-    cmd ="docker cp configs/devices/"+ devices_cfg['cloud']+" "+container.id+":/usr/local/src/sniper/sniper-7.2/"    
+    cmd ="docker cp system_configurations/devices/"+ devices_cfg['cloud']+" "+container.id+":/usr/local/src/sniper/sniper-7.2/"    
     os.system(cmd)
 
     return client.containers.list()[0]    
@@ -110,7 +110,7 @@ def check_agent_available(input_agent):
 # get agents list from data file
 def read_agent_list():
     global agent_list
-    with open('agents/agent_list.dat','r') as f:
+    with open('cross_layer_controller/agent_list.dat','r') as f:
         for line in f.readlines():
             agent_list.append(line[:-1])
 

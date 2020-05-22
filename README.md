@@ -47,7 +47,7 @@ cd ..
 ```
 - running brute force agent with example configs  
 ```
-python3 platform_controller.py brute_force configs/devices/device_setting.cfg FallDetection
+python3 platform_controller.py brute_force system_configurations/devices/device_setting.cfg FallDetection
 ```
 
 

@@ -9,7 +9,7 @@ class BruteForceAgent:
 	root_path=os.getcwd()
 	jar_file_path=root_path+"/ifogsim/ifogsim.jar"
 	two_jar_file_path=root_path+"/ifogsim/ifogsim_two_layer.jar"
-	config_folder=root_path+"/configs/ifogsim/"
+	config_folder=root_path+"/system_configurations/ifogsim/"
 	map_file_path=root_path+"/ifogsim/map.dat"
 	data_dic = {}
 	optimal_response_time_map={}
