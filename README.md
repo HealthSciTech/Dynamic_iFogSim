@@ -37,7 +37,7 @@ snipersim(http://snipersim.org/w/The_Sniper_Multi-Core_Simulator) is full-system
 
 - clone this repository
 ```
-clone https://github.com/DongDongJu/Dynamic_iFogSim
+git clone https://github.com/HealthSciTech/Dynamic_iFogSim
 ```
 - build sniper docker image
 ```
