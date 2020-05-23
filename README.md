@@ -22,7 +22,7 @@ This folder includes each device configurations that we want to simulate with sn
 
 ### ifogsim folder
 
-This folder includes a re-configuration script and an exported executable jar file from modified ifogsim(https://github.com/DongDongJu/iFogSim). If a user wants to simulate their own fog system then the user has to make their workflow by using modified ifogsim.
+This folder includes a re-configuration script and an exported executable jar file from extended ifogsim. If a user wants to simulate their own fog system then the user has to make their workflow by using extended ifogsim.
 
 ### snipersim folder 
 
@@ -30,7 +30,7 @@ snipersim(http://snipersim.org/w/The_Sniper_Multi-Core_Simulator) is full-system
 
 ## requirements
 0. Understanding of iFogSim (https://github.com/Cloudslab/iFogSim)
-1. Prepare your ifogsim workflow example with modified ifogsim(https://github.com/DongDongJu/iFogSim).
+1. Prepare your ifogsim workflow example with extended ifogsim(extended ifogsim folder).
 2. Install docker-engine (https://docs.docker.com/install/)
 
 ### Running example
