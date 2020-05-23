@@ -12,7 +12,7 @@
 
 This tool can help to re-configure iFogsim and simulate the MIPS for iFogSim from virtual full-system simulator. It means that dynamically testing the fog system. platform_controller.py can help to user for that by using lots of configurations and libs. lets check the below folder description.
 
-### agents folder
+### cross_layer_controller folder
 
 This folder includes a brute force agent example. Users can modify or add their own policies like this example.
 
@@ -32,6 +32,21 @@ snipersim(http://snipersim.org/w/The_Sniper_Multi-Core_Simulator) is full-system
 0. Understanding of iFogSim (https://github.com/Cloudslab/iFogSim)
 1. Prepare your ifogsim workflow example with extended ifogsim(extended ifogsim folder).
 2. Install docker-engine (https://docs.docker.com/install/)
+
+## how to start simulation?
+
+1. prepare a system layers by using configurations
+
+&nbsp;&nbsp;&nbsp;&nbsp;1-1. if you want to make a more complicated system layers then you have to make your jar file.  
+&nbsp;&nbsp;&nbsp;&nbsp;please check the extended ifogsim folder
+
+2. prepare virtual device's specification for configuration.
+
+3. prepare application what you want to run on the virtual device with snipersim. you can test it with docker container before run the simulation.
+
+4. prepare your own cross_layer_controller. this repo have a sample cross_layer_controller with brute force policy. if you want to run with other policy then you can add to the cross_layer folder.
+
+5. run the simulation
 
 ### Running example
 
