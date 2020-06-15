@@ -65,5 +65,13 @@ cd ..
 python3 platform_controller.py brute_force system_configurations/devices/device_setting.cfg FallDetection
 ```
 
+### Citation
+If you find this work useful for your research, please cite our paper:
+```
+@article{seodynamic,
+  title={Dynamic iFogSim: A Framework for Full-Stack Simulation of Dynamic Resource Management in IoT Systems},
+  author={Seo, Dongjoo and Shahhosseini, Sina and Mehrabadi, Milad Asgari and Donyanavard, Bryan and Lim, Song-Soo and Rahmani, Amir M and Dutt, Nikil}
+}
+```
 
 For any questions, contact me at commisori28@gmail.com
