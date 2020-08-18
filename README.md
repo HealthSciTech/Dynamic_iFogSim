@@ -70,7 +70,7 @@ If you find this work useful for your research, please cite our paper:
 ```
 @article{seodynamic,
   title={Dynamic iFogSim: A Framework for Full-Stack Simulation of Dynamic Resource Management in IoT Systems},
-  author={Seo, Dongjoo and Shahhosseini, Sina and Mehrabadi, Milad Asgari and Donyanavard, Bryan and Lim, Song-Soo and Rahmani, Amir M and Dutt, Nikil}
+  author={Seo, Dongjoo and Shahhosseini, Sina and Mehrabadi, Milad Asgari and Donyanavard, Bryan and Lim, Sung-Soo and Rahmani, Amir M and Dutt, Nikil}
 }
 ```
 
