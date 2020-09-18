@@ -89,7 +89,7 @@ RUN apt-get install -y python-opencv
 
 ENV PIN_NAME pin-3.11-97998-g7ecce2dac-gcc-linux
 WORKDIR /usr/local/bin
-RUN wget https://software.intel.com/sites/landingpage/pintool/downloads/pin-3.11-97998-g7ecce2dac-gcc-linux.tar.gz
+RUN wget --user-agent=Safari https://software.intel.com/sites/landingpage/pintool/downloads/pin-3.11-97998-g7ecce2dac-gcc-linux.tar.gz
 RUN chmod ugo+x $PIN_NAME.tar.gz
 RUN tar -xvzf $PIN_NAME.tar.gz
 RUN rm /usr/local/bin/$PIN_NAME.tar.gz
@@ -105,7 +105,6 @@ WORKDIR $SNIPER_PATH
 RUN make -j2
 
 RUN pip uninstall -y numpy
-RUN pip install pyinstaller
 
 USER root
 WORKDIR /root
