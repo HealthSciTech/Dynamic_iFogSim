@@ -105,7 +105,7 @@ WORKDIR $SNIPER_PATH
 RUN make -j2
 
 RUN pip uninstall -y numpy
-RUN pip install pyinstaller
+RUN pip install pyinstaller==3.5
 
 USER root
 WORKDIR /root
@@ -180,6 +180,7 @@ COPY fog.cfg /usr/local/src/sniper/sniper-7.2/
 COPY cloud.cfg /usr/local/src/sniper/sniper-7.2/
 COPY nehalem.cfg /usr/local/src/sniper/sniper-7.2/
 
-RUN pip3 install scipy pandas sklearn
+RUN pip3 install numpy scipy pandas cython
+RUN pip3 install sklearn
 
 CMD [ "/bin/bash" ]
