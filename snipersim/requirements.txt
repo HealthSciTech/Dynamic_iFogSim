@@ -8,7 +8,7 @@ psycopg2==2.7.3
 pyparsing==2.1.9
 python-dateutil==2.6.0
 pytz==2016.6.1
-requests==2.20.0
+requests==2.31.0
 six==1.10.0
 virtualenv==15.0.3
 whitenoise==3.3.0
